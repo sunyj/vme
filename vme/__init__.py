@@ -6,7 +6,6 @@ import urllib.error
 import base64
 import hashlib
 import time
-from io import IOBase
 
 
 URL = 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=%s'
