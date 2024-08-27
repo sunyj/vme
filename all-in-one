@@ -1,0 +1,11 @@
+#!/bin/bash
+
+base=$(dirname $0)
+cd $base
+
+echo '#!/usr/bin/env python3' > vme.py
+grep -v '__all__\|__init__.py' vme/__init__.py >> vme.py
+grep -v '__main__.py\|import send' vme/__main__.py | sed 's/python3 -m vme/vme.py/' >> vme.py
+echo "### vme.py ends here" >> vme.py
+
+chmod +x vme.py

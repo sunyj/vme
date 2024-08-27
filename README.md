@@ -34,22 +34,24 @@ vme.send_file('your-bot-key', '/path/to/your/file')
 
 `vme` is runnable with `python3 -m vme` command line.
 
+You can use the [`all-in-one`](./all-in-one) script to create a traditional single-script app, `vme.py`.  It's equivalent to `python3 -m vme` but feels like a typical Linux executable.
+
 ### Send text or image
 
 Text or image data can only be read through pipe or input redirection:
 
 ```bash
 # sending texts from another process
-echo "hello world" | python3.8 -m vme your-bot-key
+echo "hello world" | ./vme.py your-bot-key
 
 # sending an image from file
-python3.8 -m vme your-bot-key < plot.png
+./vme.py your-bot-key < plot.png
 
 # sending long texts in a file
-python3.8 -m vme your-bot-key < message.txt
+./vme.py your-bot-key < message.txt
 
 # sending image from another process
-my-plot --stdout ... | python3.8 -m vme your-bot-key
+my-plot --stdout ... | ./vme.py your-bot-key
 ```
 
 ### Send file
@@ -58,6 +60,6 @@ Althrough the API is still not implemented yet, command line semantic for "send 
 
 ```bash
 # sending a file
-python3.8 -m vme your-bot-key /path/to/your/file
+./vme.py your-bot-key /path/to/your/file
 ```
 
