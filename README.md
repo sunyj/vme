@@ -12,6 +12,8 @@ About the name: `v` = WeChat, `me` = Me, `vme` = WeChat Me.  It's somewhat inspi
 
 `vme.send()` sends text (`str`) or image (`bytes`).  Due to limitations of WeChat Work, only PNG and JPG images under 2M size are allowed.  Image is recognized by detecting first few bytes (magic bits) of the binary data.  An exception will be raised if payload is neither text nor image.
 
+All texts are sent as markdown.  Please note that the markdown features WeChat Work supports are [extremely limited](https://developer.work.weixin.qq.com/document/path/91770#markdown%E7%B1%BB%E5%9E%8B).
+
 `vme.send_file()` is not implemented yet.
 
 ```python

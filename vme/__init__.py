@@ -36,8 +36,8 @@ def send(key, msg):
 
 def send_text(url, msg):
     json_request(url, {
-        'msgtype': 'text',
-        'text': {'content': msg}
+        'msgtype': 'markdown',
+        'markdown': {'content': msg}
         })
 
 
