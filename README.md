@@ -32,9 +32,7 @@ vme.send_file('your-bot-key', '/path/to/your/file')
 
 ## Command Line Tool
 
-`vme` is runnable with `python3 -m vme` command line.
-
-You can use the [`all-in-one`](./all-in-one) script to create a traditional single-script app, `vme.py`.  It's equivalent to `python3 -m vme` but feels like a typical Linux executable.
+`vme` is runnable with `python3 -m vme` or `python3 vme.py` command line.
 
 ### Send text or image
 
@@ -62,4 +60,3 @@ Althrough the API is still not implemented yet, command line semantic for "send 
 # sending a file
 ./vme.py your-bot-key /path/to/your/file
 ```
-

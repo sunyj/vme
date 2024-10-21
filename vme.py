@@ -1,16 +1,22 @@
 #!/usr/bin/env python3
 
+__all__ = [
+    'send',
+    'send_file',
+]
+
+import sys
 import json
-from urllib.request import Request, urlopen
-import urllib.error
+import time
 import base64
 import hashlib
-import time
+import urllib.error
+from urllib.request import Request, urlopen
 
 
 URL = 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=%s'
-JPG = b'\xFF\xD8\xFF'
-PNG = b'\x89\x50\x4E\x47'
+JPG_MAGIC = b'\xFF\xD8\xFF'
+PNG_MAGIC = b'\x89\x50\x4E\x47'
 
 
 def send(key, msg):
@@ -27,27 +33,27 @@ def send(key, msg):
         pass
     if text:
         send(key, text)
-    elif msg.startswith(JPG) or msg.startswith(PNG):
+    elif msg.startswith(JPG_MAGIC) or msg.startswith(PNG_MAGIC):
         send_image(URL % key, msg)
     else:
         raise ValueError(f'not text nor PNG/JPG image')
 
 
 def send_text(url, msg):
-    json_request(url, {
-        'msgtype': 'markdown',
-        'markdown': {'content': msg}
-        })
+    json_request(url, {'msgtype': 'markdown', 'markdown': {'content': msg}})
 
 
 def send_image(url, data):
-    json_request(url, {
-        'msgtype': 'image',
-        'image': {
-            'md5': hashlib.md5(data).hexdigest(),
-            'base64': base64.b64encode(data).decode('ascii')
-        }
-    })
+    json_request(
+        url,
+        {
+            'msgtype': 'image',
+            'image': {
+                'md5': hashlib.md5(data).hexdigest(),
+                'base64': base64.b64encode(data).decode('ascii'),
+            },
+        },
+    )
 
 
 def send_file(key, fname):
@@ -75,15 +81,16 @@ def robust_request(req, timeout=5, retries=3, delay=1):
             time.sleep(delay)
     raise RuntimeError(err)
 
-import sys
 
 def die_usage():
-    print("Usage:\n"
-          "        vme.py bot-key any_file\n"
-          "        vme.py bot-key < text_or_image_file\n"
-          "        echo your message | vme.py bot-key"
-          )
+    print(
+        "Usage:\n"
+        "        vme.py bot-key any_file\n"
+        "        vme.py bot-key < text_or_image_file\n"
+        "        echo your message | vme.py bot-key"
+    )
     exit(1)
+
 
 def main():
     if len(sys.argv) < 2:
@@ -98,6 +105,7 @@ def main():
     else:
         data = sys.stdin.buffer.read()
         send(key, data)
+
 
 if __name__ == '__main__':
     main()
